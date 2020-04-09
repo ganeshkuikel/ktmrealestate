@@ -1,0 +1,149 @@
+{% extends 'main.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img" style="background-image: url('{% static 'img/bg-img/hero1.jpg' %}');">
+<!--        <div class="container h-100">-->
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-content">
+                        <h3 class="breadcumb-title">Listings</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+   <!-- ##### Advance Search Area Start ##### -->
+        {% include 'other_files/search_file.html' %}
+    <!-- ##### Advance Search Area End ##### -->
+
+    <!-- ##### Listing Content Wrapper Area Start ##### -->
+    <section class="listings-content-wrapper section-padding-100">
+        <div class="container">
+{% include 'other_files/sorting_grid.html' %}
+
+<div class="row">
+
+
+                    <!--  For sorting from database with datewise   -->
+                {% if high_to_low %}
+                    {% for high_price in high_to_low %}
+                                    <!-- Single Featured Property -->
+                                         <div class="col-12 col-md-6 col-xl-4">
+                            <div class="single-featured-property mb-50">
+                                <!-- Property Thumbnail -->
+                                <div class="property-thumb">
+                                    <img src="{{high_price.main_photo.url}}" alt="">
+
+                                      {% include 'other_files/status.html'  %}
+                                   <!--    For listing_date.html    -->
+                                {% if high_price.status == 'sold' %}
+                                         <div class="si-listing__photo-label is-open-house sold">
+                                                                {{high_price.status}}
+                                                            </div>
+                                 {% elif high_price.status == 'active' %}
+                                        <div class="si-listing__photo-label is-open-house active">
+                                                                {{high_price.status}}
+                                                            </div>
+                                  {% elif high_price.status is none %}
+                                        <div class="si-listing__photo-label is-open-house none">
+                                                                {{high_price.status}}
+                                                            </div>
+                                    {% endif %}
+
+                                    <div class="list-price">
+                                        <p>NRS:{{high_price.price | intcomma}}</p>
+                                    </div>
+                                </div>
+                                <!-- Property Content -->
+                                <div class="property-content">
+                                    <h3><strong>{{high_price.title}}</strong></h3>
+                                    <p class="location"><img src="{% static 'img/icons/location.png'%}" alt="">{{high_price.address}}</p>
+<p>Posted At: {{high_price.list_date}}</p>                                    <br>
+                                    <p><i class="zmdi zmdi-account material-icons-name"> <strong>{{high_price.realtor}}</strong></i></p>
+                                    <div class="property-meta-data d-flex align-items-end justify-content-between">
+                                        <div class="new-tag">
+                                            <img src="{% static 'img/icons/new.png' %}" alt="">
+                                        </div>
+                                        <div class="bathroom">
+                                            <img src="{% static 'img/icons/bathtub.png'%}" alt="">
+                                            <span>{{ high_price.bathrooms }}</span>
+                                        </div>
+                                        <div class="garage">
+                                            <img src="{% static 'img/icons/garage.png'%}" alt="">
+                                            <span>{{ high_price.bedrooms }}</span>
+                                        </div>
+                                        <div class="space">
+                                            <img src="{% static 'img/icons/space.png'%}" alt="">
+                                            <span>{{high_price.sqft}}</span>
+                                        </div>
+
+                                    </div>
+                                     <!-- Submit -->
+                                            <div class="form-group mb-0" >
+                                                <a href="{% url 'listing' high_price.id %}" style="margin-top:25px; width:100%; height:30px;" class="btn south-btn">More Info</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+
+                {% else %}
+                    <div class="col-md-12" >
+                        <p>No Properties Available</p>
+                    </div>
+                {% endif %}
+
+            </div>
+    <div class="row">
+                <div class="col-12">
+                    {% if high_to_low.has_other_pages  %}
+                            <div class="south-pagination d-flex justify-content-end">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        {% if high_to_low.has_previous %}
+                                            <li class="page-item">
+                                                <a href="?page={{ high_to_low.previous_page_number }}" class="page-link">&laquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&laquo;</a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for i in high_to_low.paginator.page_range %}
+                                            {% if high_to_low.number == i %}
+                                                <li class="page-item active">
+                                                    <a class="page-link">{{i}}</a>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item">
+                                                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                         {% if high_to_low.has_next %}
+                                            <li class="page-item">
+                                                <a href="?page={{ high_to_low.next_page_number }}" class="page-link">&raquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&raquo;</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Listing Content Wrapper Area End ##### -->
+
+{% endblock %}

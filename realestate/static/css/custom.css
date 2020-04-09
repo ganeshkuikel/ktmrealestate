@@ -1,0 +1,50 @@
+.row1{
+    display:flex;
+    flex-wrap:wrap;
+    width:90%;
+}
+
+#column1{
+width:25%;
+}
+.fa{
+cursor:pointer;
+margin:5px 10px;
+
+}
+.icons{
+background:#F44336;
+margin:30px auto;
+}
+.fa:hover{
+color:#947054;
+transition:0.4s;
+}
+.si-listings-column--right {
+    position: relative;
+    float: left;
+    width: 50%;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+}
+.si-listings-list .si-listing__content {
+    position: relative;
+    padding-top: 10px;
+}
+
+.si-listings-list .si-listing__price-title, .si-listings-list .si-listing__footer {
+    border-top: none !important;
+}
+.si-listings-list .si-listing__price-title {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -ms-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+}

@@ -1,0 +1,61 @@
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="listings-top-meta d-flex justify-content-between mb-100">
+                         <div class="view-area d-flex align-items-center">
+                            <span>View as:</span>
+                            <div class="grid_view ml-15"><a href="{% url 'listings' %}" class="active"><i class="fa fa-th" aria-hidden="true"></i></a></div>
+                            <div class="list_view ml-15"><a href="{% url 'list_view' %}"><i class="fa fa-th-list" aria-hidden="true"></i></a></div>
+                        </div>
+                        <div class="order-by-area d-flex align-items-center">
+
+
+
+                            <span class="mr-15">Order by:</span>
+                                        <select name="choose_type" onchange="javascript:handleSelect(this)"  >
+                                            <option value="{% url 'listings' %}"
+                                            {% if 'listings' in request.path %}
+                                            selected
+                                              {% else %}
+
+                                         {% endif %}>Oldest</option>
+
+                                           <option value="{% url 'date_wise' %}"
+                                            {% if 'date_wise' in request.path %}
+                                            selected
+                                              {% else %}
+
+                                         {% endif %}
+                                           >Newest</option>
+
+                                            <option value="{% url 'low_to_high' %}"
+                                            {% if 'low_to_high' in request.path %}
+                                            selected
+                                              {% else %}
+
+                                         {% endif %}
+                                            ><p>Price Low </p></option>
+
+                                              <option value="{% url 'high_to_low' %}"
+                                            {% if 'high_to_low' in request.path %}
+                                                selected
+                                            {% else %}
+
+                                            {% endif %}
+                                            >Price High</option>
+
+                                        </select>
+                                                        <script type="text/javascript">
+                                                            function handleSelect(elm)
+                                                            {
+                                                            window.location = elm.value;
+                                                            }
+                                                        </script>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>

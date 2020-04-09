@@ -1,0 +1,79 @@
+           <style>
+    @media screen and (max-width: 600px) {
+  .grid_view {
+    visibility: hidden;
+    display: none;
+  }
+}
+</style>
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="listings-top-meta d-flex justify-content-between mb-100">
+                         <div class="view-area d-flex align-items-center">
+                            <span>View as:</span>
+                            <div class="grid_view ml-15"><a href="{% url 'listings' %}"><i class="fa fa-th" aria-hidden="true"></i></a></div>
+                            <div class="list_view ml-15"><a href="{% url 'list_view' %}"
+                              {% if 'list_view' in request.path %}
+                                            class="active"
+                               {% elif 'new_date_list' in request.path %}
+                                            class='active'
+                                 {% elif 'price_low' in request.path %}
+                                            class='active'
+                                {% elif 'price_high' in request.path %}
+                                            class='active'
+                                {% else %}
+
+
+                                         {% endif %}
+                            ><i class="fa fa-th-list" aria-hidden="true"></i></a></div>
+                        </div>
+                        <div class="order-by-area d-flex align-items-center">
+
+
+
+                            <span class="mr-15">Order by:</span>
+                                        <select name="choose_type" onchange="javascript:handleSelect(this)"  >
+                                            <option value="{% url 'list_view' %}"
+                                            {% if 'list_view' in request.path %}
+                                            selected
+                                              {% else %}
+
+                                         {% endif %}>Oldest</option>
+
+                                           <option value="{% url 'new_date_list' %}"
+                                            {% if 'new_date_list' in request.path %}
+                                            selected
+                                              {% else %}
+
+                                         {% endif %}
+                                           >Newest</option>
+
+                                            <option value="{% url 'price_low' %}"
+                                            {% if 'price_low' in request.path %}
+                                            selected
+                                              {% else %}
+
+                                         {% endif %}
+                                            ><p>Price Low </p></option>
+
+                                              <option value="{% url 'price_high' %}"
+                                            {% if 'price_high' in request.path %}
+                                                selected
+                                            {% else %}
+
+                                            {% endif %}
+                                            >Price High</option>
+
+                                        </select>
+                                                        <script type="text/javascript">
+                                                            function handleSelect(elm)
+                                                            {
+                                                            window.location = elm.value;
+                                                            }
+                                                        </script>
+
+                        </div>
+
+                    </div>
+                </div>

@@ -1,0 +1,65 @@
+<style>
+    .si-listing__photo-label {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    border-radius: 4px;
+    padding: 5px 8px 4px;
+    font-size: 0.85em;
+    line-height: 1;
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+    background-color: #2a2730;
+    z-index: 2;
+}
+.si-listing__photo-label.is-open-house.sold {
+    color: #fff;
+    background-color: #a40000;
+}
+.si-listing__photo-label.is-open-house.active {
+    color: #fff;
+    background-color: #046b06;
+}
+.si-listing__photo-label.is-open-house.none {
+    color: #fff;
+    background-color: #947054;
+}
+</style>
+<!-- For listings.html -->
+                                {% if listing.status == 'sold' %}
+                                    <div class="si-listing__photo-label is-open-house sold">
+                                                                {{listing.status}}
+                                                            </div>
+
+
+<!--    For high_to_low    -->
+
+<!--For low_to hig_price.html-->
+                                {% elif price.status == 'sold' %}
+                                         <div class="si-listing__photo-label is-open-house sold">
+                                                                {{price.status}}
+                                                            </div>
+                                 {% elif price.status == 'active' %}
+                                        <div class="si-listing__photo-label is-open-house active">
+                                                                {{price.status}}
+                                                            </div>
+                                  {% elif price.status is none %}
+                                        <div class="si-listing__photo-label is-open-house none">
+                                                                {{price.status}}
+                                                            </div>
+
+
+
+
+
+
+                                     {% elif listing.status == 'active' %}
+                                        <div class="si-listing__photo-label is-open-house active">
+                                                                {{listing.status}}
+                                                            </div>
+                                     {% elif listing.status is none %}
+                                        <div class="si-listing__photo-label is-open-house none">
+                                                                {{listing.status}}
+                                                            </div>
+                                    {% endif %}

@@ -1,0 +1,569 @@
+{% extends 'main.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+
+ <link rel="stylesheet" href="{% static 'custom.css' %}">
+<style>
+.si-listings-list {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.si-container {
+    font-family: 'proxima-nova',sans-serif;
+    font-size: 15px;
+    line-height: 1.428571429;
+    color: #676767;
+    margin: 20px 0;
+    text-align: left;
+}
+.tab-content>.active {
+    display: block;
+}
+.fade.in {
+    opacity: 1;
+}
+.si-container * {
+    font-family: 'proxima-nova',sans-serif;
+}
+
+.property-thumb{
+float:left;
+    width: 100%;
+    height: 100%;
+}
+
+.si-listings-list .si-listing__price-title, .si-listings-list .si-listing__footer {
+    border-top: none !important;
+}
+.si-listings-list .si-listing__price-title {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -ms-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+}
+.si-listings-column--right {
+    position: relative;
+    float: left;
+    width: 50%;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+}
+@media (min-width: 992px)
+.si-site-container:not(.si-site-container--full) .si-listing, .si-site-container-fluid:not(.si-site-container--full) .si-listing {
+    font-size: 14px;
+}
+.si-listing__info:after {
+    clear: both;
+}
+.si-listing {
+    background-color: #ffffff;
+    border: 2px solid #e8e8e8;
+    font-size: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    -webkit-transition: border-color 0.4s ease-in-out;
+    -o-transition: border-color 0.4s ease-in-out;
+    transition: border-color 0.4s ease-in-out;
+}
+
+.si-listings-list .si-listing>.si-row {
+    margin-left: 0;
+    margin-right: 0;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -ms-flex;
+    display: flex;
+}
+.si-listings-list .si-listing>.si-row:before, .si-listings-list .si-listing>.si-row:after {
+    content: " ";
+    display: table;
+}
+
+.si-row:before, .si-row:after {
+    content: " ";
+    display: table;
+}
+
+*:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+.si-site-container .si-listings-column--left {
+    position: relative;
+    float: left;
+    width: 50%;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.si-listings-list .si-listing__photo, .si-listings-list .si-listing__photo-img, .si-listings-list .si-listing__photo-img div {
+    width: 100%;
+    height: 100%;
+}
+
+.si-listing__photo-label.is-open-house {
+    color: #fff;
+    background-color: #a40000;
+}
+.si-listing__photo-label {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    border-radius: 4px;
+    padding: 5px 8px 4px;
+    font-size: 0.85em;
+    line-height: 1;
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+    background-color: #2a2730;
+    z-index: 2;
+}
+
+.si-listings-list .si-listing__photo, .si-listings-list .si-listing__photo-img, .si-listings-list .si-listing__photo-img div {
+    width: 100%;
+    height: 100%;
+}
+
+.js-listing-detail{
+cursor:pointer;
+}
+
+a {
+    color: #d21245;
+    text-decoration: none;
+    outline: 0;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+.si-site-container .si-listings-column--right {
+    position: relative;
+    float: left;
+    width: 50%;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+@media (min-width: 992px)
+.si-site-container:not(.si-site-container--full) .si-listings-list .si-listing__content>div, .si-site-container-fluid:not(.si-site-container--full) .si-listings-list .si-listing__content>div {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.si-listings-list .si-listing__content {
+    position: relative;
+    padding-top: 10px;
+}
+.si-listing__content {
+    position: relative;
+}
+
+.si-listing__content:before, .si-listing__content:after {
+    content: " ";
+    display: table;
+}
+
+.si-listings-list .si-listing__content>div {
+    border-top: solid 1px #e8e8e8;
+    padding: 8px 40px;
+}
+
+.si-listings-list .si-listing__price-title, .si-listings-list .si-listing__footer {
+    border-top: none !important;
+}
+
+.si-listings-list .si-listing__price-title {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -ms-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+}
+
+.si-listings-list .si-listing__price {
+    font-size: 1.8em;
+    line-height: 1.2;
+}
+@media (min-width: 992px)
+.si-site-container:not(.si-site-container--full) .si-listings-list .si-listing__price {
+    font-size: 1.65em;
+    border-bottom: solid 1px #e8e8e8;
+    margin: 0 -25px 10px;
+    padding: 0 25px 10px;
+}
+
+.si-listings-list .si-listing__price {
+    font-size: 1.8em;
+    line-height: 1.2;
+}
+ .si-listings-column--left {
+    position: relative;
+    float: left;
+    width: 50%;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.si-listings-list .si-listing__price-title, .si-listings-list .si-listing__footer {
+    border-top: none !important;
+}
+
+.si-listings-list .si-listing__price-title {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -ms-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+}
+
+.si-listings-list .si-listing__price {
+    font-size: 1.8em;
+    line-height: 1.2;
+}
+.si-listing__content{
+color:black;
+
+}
+
+
+
+
+
+
+@media (min-width: 992px)
+.si-site-container:not(.si-site-container--full) .si-listings-list .si-listing__title {
+    text-align: left;
+}
+.si-listings-list .si-listing__title {
+    font-size: 1.2em;
+    text-align: left;
+    display: inline-block;
+}
+.si-listings-list .si-listing__price-title>div {
+clear: both;
+    white-space: nowrap;
+    width: 49%;
+    -webkit-flex-basis: 50%;
+    -ms-flex-basis: 50%;
+    flex-basis: 50%;
+}
+.si-listing__info{
+  padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden;
+    position: relative;
+}
+
+.si-listings-list .si-listing__info {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: hidden;
+    position: relative;
+}
+.si-listing__info:before, .si-listing__info:after {
+    content: " ";
+    display: table;
+}
+.si-listing__info>div {
+    width: 33.3333%;
+    float: left;
+}
+si-listing__info-value_date{
+width:100%;
+}
+
+span{
+color: black;
+margin-left:5px;
+}
+.listing-label{
+margin-left:5px;
+}
+.si-listing__info .si-listing__info-label {
+    color: #676767;
+}
+@media (min-width: 481px)
+.si-listing__info .si-listing__info-label {
+    /* color: #676767; */
+    color: rgba(103,103,103,0.7);
+}
+
+div {
+    display: block;
+
+}
+
+.example{
+      position:relative;
+      padding:0;
+      width:300px;
+      display:block;
+      cursor:pointer;
+      overflow:hidden;
+      }
+      .content {
+      opacity:0;
+      font-size: 40px;
+      position:absolute;
+      top:0;
+      left:0;
+      color:#000;
+      background-color:rgba(200,200,200,0.5);
+      width:300px;
+      height:300px;
+      -webkit-transition: all 400ms ease-out;
+      -moz-transition: all 400ms ease-out;
+      -o-transition: all 400ms ease-out;
+      -ms-transition: all 400ms ease-out;
+      transition: all 400ms ease-out;
+      text-align:center;
+      }
+      .example .content:hover { opacity:1; }
+      .example .content .text {
+      height:0;
+      opacity:1;
+      transition-delay: 0s;
+      transition-duration: 0.4s;
+      }
+      .example .content:hover .text {
+      opacity:1;
+      transform: translateY(250px);
+      -webkit-transform: translateY(250px);
+      }
+.si-listing__photo-label.is-open-house.sold {
+    color: #fff;
+    background-color: #a40000;
+}
+.si-listing__photo-label.is-open-house.active {
+    color: #fff;
+    background-color: #046b06;
+}
+.si-listing__photo-label.is-open-house.none {
+    color: #fff;
+    background-color: #947054;
+
+
+
+
+
+</style>
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img" style="background-image: url('{% static 'img/bg-img/hero1.jpg' %}');">
+<!--        <div class="container h-100">-->
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-content">
+                        <h3 class="breadcumb-title" style="background:#192a56 ">Listings</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+   <!-- ##### Advance Search Area Start ##### -->
+        {% include 'other_files/search_file.html' %}
+    <!-- ##### Advance Search Area End ##### -->
+
+    <!-- ##### Listing Content Wrapper Area Start ##### -->
+
+    <section class="listings-content-wrapper section-padding-100">
+        <div class="container">
+{% include 'other_files/sorting_list.html' %}
+
+<!--            For list view-->
+         <div class="tab-content si-container si-listings js-lw-container">
+                 <div class="si-listings-list">
+
+
+                    <!--  For sorting from database with default   -->
+                {% if listings %}
+                    {% for listing in listings %}
+                                            <div class="si-listing">
+                                                <div class="si-row">
+                                                    <div class="si-listings-column--left">
+                                                        <div class="si-listing__photo js-listing-photo-nav">
+                                                             {% include 'other_files/status.html' %}
+                                                             {% if listing.status == 'sold' %}
+                                         <div class="si-listing__photo-label is-open-house sold">
+                                                                {{listing.status}}
+                                                            </div>
+                                 {% elif listing.status == 'active' %}
+                                        <div class="si-listing__photo-label is-open-house active">
+                                                                {{listing.status}}
+                                                            </div>
+                                  {% elif listing.status is none %}
+                                        <div class="si-listing__photo-label is-open-house none">
+                                                                {{listing.status}}
+                                                            </div>
+                                    {% endif %}
+                                                            <a  href="{% url 'listing' listing.id%}">
+                                                                <div class="si-listing__photo-img js-images">
+                                                                    <div class="example">
+                                                                         <img  src="{{listing.main_photo.url}}" alt="">
+
+                                                                    <div class="content">
+                                                                        <div class="text">More Info</div>
+                                                                    </div>
+                                                                        </div>
+
+
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="si-listings-column--right">
+                                                        <div class="si-listing__content">
+                                                            <div class="si-listing__price-title">
+                                                                <div>
+                                                                    <div class="si-listing__price">
+                                                                    <p><strong>Price: NRS{{listing.price | intcomma}}</strong></p>
+
+                                                                </div>
+                                                                <div class="si-listing__title">
+                                                                    <strong>{{listing.title}}</strong>
+                                                                    <p class="location"><img src="{% static 'img/icons/location.png'%}" alt="">{{listing.address}}</p>
+                                                                </div>
+                                                                </div>
+
+                                                            </div>
+                                                             <div class="si-listing__info">
+                                                            <div>
+                                                             <div class="si-listing__info-label">
+                                                              Bathroom
+
+                                                            </div>
+                                                             <div class="si-listing__info-value">
+                                                             <span><strong>{{ listing.bathrooms }}</strong></span>
+                                                        </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="si-listing__info-label">
+                                                            Bed
+                                                            </div>
+                                                             <div class="si-listing__info-value">
+                                                                 <span><strong>{{ listing.bedrooms }}</strong></span>
+                                                             </div>
+
+                                                        </div>
+                                                         <div>
+                                                            <div class="si-listing__info-label">
+                                                            Sqft
+                                                            </div>
+                                                             <div class="si-listing__info-value">
+                                                                 <span><strong>{{ listing.sqft }}</strong></span>
+                                                             </div>
+                                                              </div>
+                                                                  </div>
+                                                                 <div class="si-listing__info-value_date">
+                                                                      <p>Posted At:  {{listing.list_date}}</p>
+                                                             </div>
+                                                            <div class="si-listing__info-value_location">
+                                                             {% if listing.location %}
+                                                                <iframe width="100%" height="50px" src="{{ listing.location }}"></iframe>
+                                                             {% else %}
+                                                                <p>Location not mentioned Please contact realtor</p>
+                                                             {% endif %}
+                                                            </div>
+
+
+
+
+                                                        </div>
+
+
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                    {% endfor %}
+
+                {% else %}
+                    <div class="col-md-12" >
+                        <p>No Properties Available</p>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {% if listings.has_other_pages  %}
+                            <div class="south-pagination d-flex justify-content-end">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        {% if listings.has_previous %}
+                                            <li class="page-item">
+                                                <a href="?page={{ listings.previous_page_number }}" class="page-link">&laquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&laquo;</a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for i in listings.paginator.page_range %}
+                                            {% if listings.number == i %}
+                                                <li class="page-item active">
+                                                    <a class="page-link">{{i}}</a>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item">
+                                                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                         {% if listings.has_next %}
+                                            <li class="page-item">
+                                                <a href="?page={{ listings.next_page_number }}" class="page-link">&raquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&raquo;</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                    {% endif %}
+                </div>
+                 </div>
+</div>
+        </div>
+    </section>
+    <!-- ##### Listing Content Wrapper Area End ##### -->
+
+
+{% endblock %}

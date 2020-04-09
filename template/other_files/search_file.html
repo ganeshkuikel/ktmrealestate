@@ -1,0 +1,156 @@
+<!-- ##### Advance Search Area Start ##### -->
+    <div class="south-search-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="advanced-search-form">
+                         Search Title
+                        <div class="search-title">
+                            <p>Search your choice</p>
+                        </div>
+                        <!-- Search Form -->
+<form action="{% url 'search' %}">
+              <!-- Form Row 1 -->
+              <div class="row">
+                <div class="col-12 col-md-4 col-lg-3">
+                 <div class="form-group">
+                     <input type="input" class="form-control" name="keywords" placeholder="Keyword" value="{{ values.keywords }}">
+                 </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">City</label>
+                  <input type="text" name="city" class="form-control" placeholder="City" value="{{ values.city }}">
+                </div>
+                  <div class="col-md-4 mb-3">
+                  <label class="sr-only">Districts</label>
+                  <input type="text" name="district" class="form-control" placeholder="District" value="{{ values.district }}">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                        <label class="sr-only" >State</label>
+
+                 <select name="state" class="form-control">
+
+                    <option selected="true" disabled="disabled">State (All)</option>
+                   {% for key,value in all_states.items %}
+                     <option value="{{ key }}"
+                     {% if key == values.state %}
+                             selected
+                             {% endif %}
+                     >{{ value }}</option>
+                     {% endfor %}
+                  </select>
+
+                </div>
+
+                   <div class="col-12 col-md-4 col-lg-3">
+<!--                                            <div class="form-group">-->
+                                                <select name="categories" class="form-control" id="types" >
+                                                    <option selected="true" disabled="disabled">All Types</option>
+                                                    {% for key,value in types_choices.items %}
+
+                                                        <option value="{{ key }}"
+                                                        {% if key == values.categories %}
+                                                                selected
+                                                                {% endif %}
+                                                        >{{ value }}</option>
+                                                    {% endfor %}
+                                                </select>
+<!--                                            </div>-->
+                                        </div>
+
+              </div>
+              <!-- Form Row 2 -->
+              <div class="row">
+                <div class="col-12 col-md-4 col-xl-2 ">
+                  <label class="sr-only">Bedrooms</label>
+                  <select name="bedrooms" class="form-control">
+                    <option selected="true" disabled="disabled">Bedrooms (All)</option>
+                   {% for key,value in bedroom_choices.items %}
+                     <option value="{{ key }}"
+                     {% if key == values.bedrooms %}
+                             selected
+                             {% endif %}
+                     >{{ value }}</option>
+                     {% endfor %}
+                  </select>
+                </div>
+                <div class="col-12 col-md-4 col-xl-2">
+                  <select name="price" class="form-control" id="type">
+                    <option selected="true" disabled="disabled">Max Price (Any)</option>
+                    <option value="5000000">NRS:500,000,0</option>
+                    <option value="10000000">NRS:100,000,00</option>
+                    <option value="15000000">NRS:150,000,00</option>
+                    <option value="20000000">NRS:200,000,00</option>
+                    <option value="25000000">NRS:250,000,00</option>
+                    <option value="30000000">NRS:300,000,00</option>
+                      <option value="100000000">NRS:3crore+</option>
+
+
+
+                  </select>
+                </div>
+
+                  <div class="col-12 col-md-4 col-xl-2">
+                                        <select class="form-control" id="bathrooms" name="bathrooms">
+                                            <option selected="true" disabled="disabled" >Bathrooms</option>
+                                             {% for key,value in bathroom_choices.items %}
+                     <option value="{{ key }}"
+                       {% if key == values.bathrooms %}
+                             selected
+                             {% endif %}
+                     >{{ value }}</option>
+                     {% endfor %}
+                                        </select>
+
+                                </div>
+
+
+              </div>
+                                    <div class="col-12 search-form-second-steps">
+                                    <div class="row">
+
+
+
+                                        <div class="col-12 col-md-4 col-lg-3">
+<!--                                            <div class="form-group">-->
+                                                <select class="form-control" id="Actions" name="status">
+                                                    <option selected="true" disabled="disabled">Status</option>
+                                                    <option>Active</option>
+                                                    <option>Sold</option>
+                                                </select>
+<!--                                            </div>-->
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-3">
+<!--                                            <div class="form-group">-->
+                                                <select name="cities" class="form-control" id="city2">
+                                                    <option selected="true" disabled="disabled"> All Cities</option>
+                                                    {% for key,value in all_cities.items %}
+                                                        <option value="{{ key }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                </select>
+<!--                                            </div>-->
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex justify-content-between align-items-end">
+                                    <!-- More Filter -->
+                                    <div class="more-filter">
+                                        <a href="#" id="moreFilter">+ More filters</a>
+                                    </div>
+<div class="form-group mb-0">
+                                        <button type="submit" class="btn south-btn">Search</button>
+                                    </div>
+                                </div>
+</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Advance Search Area End ##### -->

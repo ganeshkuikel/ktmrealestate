@@ -1,0 +1,23 @@
+.row1{
+    display:flex;
+    flex-wrap:wrap;
+    width:90%;
+}
+
+#column1{
+width:25%;
+}
+.fa{
+cursor:pointer;
+margin:5px 10px;
+
+}
+.icons{
+background:#F44336;
+margin:30px auto;
+}
+.fa:hover{
+color:#947054;
+transition:0.4s;
+}
+

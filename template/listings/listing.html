@@ -1,0 +1,551 @@
+ {% extends 'main.html' %}
+{% load static %}
+{% block title %}| {{ listing.title }}{% endblock %}
+{% block content %}
+ {% load humanize %}
+
+ <style>
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  display: none;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 50%;
+  display: inline-block;
+  margin-left:310px;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5rem;
+    pointer-events: none;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+
+.contact-realtor-wrapper{
+margin-top:300px;
+
+}
+
+.si-listing__photo-label {
+    border-radius: 4px;
+    padding: 5px 8px 4px;
+    font-size: 0.85em;
+    line-height: 1;
+    text-align: center;
+    font-weight: 600;
+    color: #fff;
+    background-color: #2a2730;
+}
+
+.si-listing__photo-label.is-open-house {
+    color: #fff;
+    background-color: #a40000;
+}
+.options-maps>a.active {
+    color: #fff;
+    background-color: #947054;
+}
+.options-maps>a:first-child {
+    margin-top: 0;
+}
+.options-maps>a {
+    display: block;
+    background-color: #333333;
+    color: #fff;
+    padding: 7px 20px;
+    margin-top: 5px;
+    border-radius: 3px;
+    text-decoration:none;
+    }
+    div>.options-maps{
+    position: relative;
+    overflow: hidden;
+    }
+    .list-group-item>.status>span.is-active {
+    color: #fff;
+    background-color: #046b06;
+}
+    .list-group-item>.status>span.none {
+    color: #fff;
+    background-color: #947054;
+}
+
+    .list-group-item>.status>span.sold {
+    color: #fff;
+    background-color: #777777;
+}
+.list-group-item>.status>span {
+    font-weight: 600;
+    display: inline-block;
+    padding-left: 5px;
+}
+.status>span {
+    color: #fff;
+    background-color: #2a2730;
+    padding: 4px 8px;
+    border-radius: 15px;
+    min-width: 100px;
+    text-align: center;
+    font-size: 0.9em;
+    margin-left: 10px;
+}
+
+
+ </style>
+<!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img" style="background-image: url('{{ listing.main_photo.url }}');">
+<!--        <div class="container h-100">-->
+          <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-content">
+                        <h3 class="breadcumb-title">{{listing.title}}</h3>
+                    </div>
+                </div>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+ {% include 'other_files/messages.html' %}
+
+    <!-- ##### Listings Content Area Start ##### -->
+    <section class="listings-content-wrapper section-padding-100" onload="getImageCount()">
+        <div class="container">
+<div class="listings-content">
+    <strong><a href="{% url 'listings' %}" style="font-size:25px; text-decoration:none;">Go back to Property</a></strong>
+         </div>
+
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="listings-content">
+                        <!-- Price -->
+
+                        <h1><strong>Title: {{listing.title}} </strong></h1>
+                        <div class="new-tag">
+                                <img src="{% static 'img/icons/new.png' %}" alt=""> <br>
+                            </div> <br>
+                             <div class="row">
+<!--                        <div class="col-md-9">-->
+
+                    <!-- Single Listings Slides -->
+                        <!-- Single Slide -->
+
+                        <img src="{{listing.main_photo.url}}" class="img-main img-fluid mb-3" alt="">
+                              <div class="photocount row mb-5 thumbs">
+
+                  {% if listing.photo_1  %}
+                                  <div class="col-md-2">
+                <a href="{{listing.photo_1.url}}" data-lightbox="home-images">
+                          <img src="{{listing.photo_1.url}}" class="img-fluid" alt="">
+                     </a>
+                                      </div>
+                           {% endif %}
+
+            {% if listing.photo_6  %}
+                                  <div class="col-md-2">
+                <a href="{{listing.photo_6.url}}" data-lightbox="home-images">
+                          <img src="{{listing.photo_6.url}}" class="img-fluid" alt="">
+                     </a>
+                                      </div>
+                           {% endif %}
+            {% if listing.photo_2  %}
+                                  <div class="col-md-2">
+                <a href="{{listing.photo_2.url}}" data-lightbox="home-images">
+                          <img src="{{listing.photo_2.url}}" class="img-fluid" alt="">
+                     </a>
+                                      </div>
+                           {% endif %}
+             {% if listing.photo_3  %}
+                                  <div class="col-md-2">
+                <a href="{{listing.photo_3.url}}" data-lightbox="home-images">
+                          <img src="{{listing.photo_3.url}}" class="img-fluid" alt="">
+                     </a>
+                                      </div>
+                           {% endif %}
+             {% if listing.photo_4  %}
+                                  <div class="col-md-2">
+                <a href="{{listing.photo_4.url}}" data-lightbox="home-images">
+                          <img src="{{listing.photo_4.url}}" class="img-fluid" alt="">
+                     </a>
+                                      </div>
+                           {% endif %}
+             {% if listing.photo_5  %}
+                                  <div class="col-md-2">
+                <a href="{{listing.photo_5.url}}" data-lightbox="home-images">
+                          <img src="{{listing.photo_5.url}}" class="img-fluid" alt="">
+                     </a>
+                                      </div>
+                           {% endif %}
+          </div>
+<!--                </div>-->
+            </div>
+
+                        <h1 class="location"><img src="{% static 'img/icons/location.png' %}" alt="">{{listing.address}}</h1>
+
+                        <h4>Property Added date: {{ listing.list_date }}</h4> <br>
+                        <!-- Meta -->
+                         <!-- Fields -->
+          <div class="row mb-5 fields">
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                      <li class="list-group-item text-secondary">
+                           <div class="status">
+                               {% if listing.status == 'active' %}
+                   Status:
+                  <span class="float-right is-active">{{ listing.status }}
+                  </span>
+                               {% elif listing.status is null%}
+                               Status:
+                                    <span class="float-right none">{{ listing.status }}
+                  </span>
+                                {% elif listing.status == 'sold' %}
+                               Status:
+                                    <span class="float-right sold">{{ listing.status }}
+                  </span>
+                               {% endif %}
+                               </div>
+                </li>
+
+
+                <li class="list-group-item text-secondary">
+                   Asking Price:
+                  <span class="float-right">RS {{listing.price|intcomma}}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                   Bedrooms:
+                  <span class="float-right">{{listing.bedrooms}}</span>
+                </li>
+                <li class="list-group-item text-secondary">Bathrooms:
+                  <span class="float-right">{{ listing.bathrooms }}</span>
+                </li>
+
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-secondary">
+                   Square Feet:
+                  <span class="float-right">{{ listing.sqft }}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                   Lot Size:
+                  <span class="float-right">2.5 Acres
+                  </span>
+                </li>
+                <li class="list-group-item text-secondary">
+                   Realtor:
+                  <span class="float-right">{{ listing.realtor.name }}
+                  </span>
+                </li>
+
+
+              </ul>
+            </div>
+          </div>
+
+                        <br>
+<h5>Description: </h5>
+                        <br>
+ <p>{{ listing.description }}</p> <br>
+
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="contact-realtor-wrapper" style="background:white; text-alignment:center;">
+                        <div class="list-price">  <strong><h5 >Concerned Realtor</h5></strong></div>
+                            <img src="{{listing.realtor.photo.url}}" alt="">
+                            <div class="realtor---info">
+                                <h2>{{listing.realtor.name}}</h2>
+                                <p>Realtor</p>
+                                <h6><img src="{% static 'img/icons/phone-call.png' %}" alt=""> {{ listing.realtor.phone }}</h6>
+                                <h6><img src="{% static 'img/icons/envelope.png' %}" alt=""> {{ listing.realtor.email }}</h6>
+                            </div>
+                        <button class="btn-primary btn-block btn-lg" id="myBtn" data-toggle="modal" style="background-color:#947054; border:none;" data-target="#inquiryModal">Ask a question</button>
+
+<!--                        Inquiral Dialog-->
+
+<!-- The Modal -->
+
+ <!-- Inquiry Modal -->
+  <div  id="myModal" class="modal">
+      <div class="model-dialog">
+          <div class="modal-content">
+        <div class="modal-header"  style="background-color:#947054; border:none;">
+          <h5 class="modal-title" id="inquiryModalLabel" >Need Some Help? Get more info about our listings.</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'contacts' %}" method="post">
+              {% csrf_token %}
+              {% if user.is_authenticated %}
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+              {% else %}
+
+              <input type="hidden" name="user_id" value="0">
+
+              {% endif %}
+
+              <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+              <input type="hidden" name="listing_id" value="{{ listing.id }}">
+            <div class="form-group">
+              <input type="text"  name="listing" class="form-control" value="{{listing.title}}">
+            </div>
+            <div class="form-group">
+              <input type="text" name="name" placeholder="Enter your name" class="form-control"
+                     {% if user.is_authenticated %}
+                        value="{{ user.first_name }} {{ user.last_name }}"
+                     {% endif %} required>
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Enter your email" name="email" class="form-control"
+                     {% if user.is_authenticated %}
+                        value="{{ user.email }}"
+                     {% endif %}
+                     required>
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Enter your phone" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <textarea name="message" placeholder="Ask anything you like!" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" style="background-color:#947054; border:none;" value="Send" class="btn btn-block btn-secondary">
+          </form>
+
+        </div>
+
+      </div>
+      </div>
+
+  </div>
+
+</div>
+<!--                        Script for opening inquiral model-->
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Listing Maps -->
+
+        <section class="breadcumb-area bg-img" >
+
+
+            <div class="maps">
+                 <h1 style="margin-right:1150px; font-style:bold;">Location:</h1>
+                <div class="options-maps" style="position: absolute; top: 45%; right: 2%; z-index: 2;">
+
+                    {% if listing.location %}
+                         <a href="javascript:map();"  onclick="map" id = "maps"class="map active">Map</a>
+                        <a href="javascript:aerial();" onclick="aerial"  id="aerial" class="map ">AriealView</a>
+                        <a href="javascript:street();"   id = "street" class="map ">StreetView</a>
+                    {% endif %}
+
+                     </div>
+                <div class="si-ld-map__panes js-map-panes" >
+                    <div id="mapCanvas">
+                         {% if listing.location %}
+                <iframe width="100%" height="500px" src="{{ listing.location }}">
+                    </iframe>
+
+                {% else %}
+                    <h1>Location not mentioned Please contact realtor</h1>
+                {% endif %}
+                    </div>
+                    <div id="aerialview">
+                         {% if listing.aerial_view %}
+                <iframe width="100%" height="500px" src="{{ listing.aerial_view }}">
+                    </iframe>
+
+                {% else %}
+                    <h1>Areial view not available  Please contact realtor</h1>
+                {% endif %}
+                    </div>
+                     <div id="streetview">
+                         {% if listing.street_view %}
+                <iframe width="100%" height="500px" src="{{ listing.street_view }}">
+                    </iframe>
+
+                {% else %}
+                    <h1>Street view not mentioned Please contact realtor</h1>
+                {% endif %}
+                    </div>
+
+
+
+                </div>
+
+                <script>
+             $("#aerialview").hide();
+              $("#streetview").hide();
+
+
+                function map() {
+                $("#aerialview").hide();
+              $("#streetview").hide();
+                document.getElementById("mapCanvas").style.display = "block";
+            document.getElementById("areial").style.display = "none";
+            document.getElementById("streetview").style.display = "none";
+        }
+        function aerial() {
+        $("#aerialview").show();
+        $("#mapCanvas").hide();
+
+            document.getElementById("aerial").style.display = "block";
+
+            document.getElementById("mapCanvas").style.display = "none";
+            document.getElementById("streetview").style.display = "none";
+
+
+}
+
+ function street() {
+                 $("#aerialview").hide();
+        $("#streetview").show();
+        $("#mapCanvas").hide();
+            document.getElementById("streetview").style.display = "block";
+
+            document.getElementById("areialview").style.display = "none";
+            document.getElementById("mapCanvas").style.display = "none";
+
+
+}
+<!-- Add active class to the current button (highlight it) -->
+
+var btns = document.getElementsByClassName(" map");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+
+}
+
+</script>
+
+
+            </div>
+
+        </section>
+        <div class="contact-realtor-wrapper" style="background:white">
+<div class="col-12">
+                    <div class="form-group">
+                        <h2>Comments: </h2>
+                                        <textarea name="message" class="form-control" id="realtor-message" cols="30" rows="10" placeholder="Write Your Comment on the house"></textarea>
+                                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Listings Content Area End ##### -->
+ {% endblock %}

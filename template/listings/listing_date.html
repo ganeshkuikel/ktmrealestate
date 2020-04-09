@@ -1,0 +1,154 @@
+{% extends 'main.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+
+<style>
+
+</style>
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img" style="background-image: url('{% static 'img/bg-img/hero1.jpg' %}');">
+<!--        <div class="container h-100">-->
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-content">
+                        <h3 class="breadcumb-title">Listings</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+   <!-- ##### Advance Search Area Start ##### -->
+        {% include 'other_files/search_file.html' %}
+    <!-- ##### Advance Search Area End ##### -->
+
+    <!-- ##### Listing Content Wrapper Area Start ##### -->
+    <section class="listings-content-wrapper section-padding-100">
+        <div class="container">
+{% include 'other_files/sorting_grid.html' %}
+
+
+<div class="row">
+
+
+                    <!--  For sorting from database with datewise   -->
+                {% if date_listing %}
+                    {% for date in date_listing %}
+                                    <!-- Single Featured Property -->
+                                         <div class="col-12 col-md-6 col-xl-4">
+                            <div class="single-featured-property mb-50">
+                                <!-- Property Thumbnail -->
+                                <div class="property-thumb">
+                                    <img src="{{date.main_photo.url}}" alt="">
+
+                                    {% include 'other_files/status.html'  %}
+                                   <!--    For listing_date.html    -->
+                                {% if date.status == 'sold' %}
+                                         <div class="si-listing__photo-label is-open-house sold">
+                                                                {{date.status}}
+                                                            </div>
+                                 {% elif date.status == 'active' %}
+                                        <div class="si-listing__photo-label is-open-house active">
+                                                                {{date.status}}
+                                                            </div>
+                                  {% elif date.status is none %}
+                                        <div class="si-listing__photo-label is-open-house none">
+                                                                {{date.status}}
+                                                            </div>
+                                    {% endif %}
+
+                                    <div class="list-price">
+                                        <p>NRS:{{date.price | intcomma}}</p>
+                                    </div>
+                                </div>
+                                <!-- Property Content -->
+                                <div class="property-content">
+                                    <h3><strong>{{date.title}}</strong></h3>
+                                    <p class="location"><img src="{% static 'img/icons/location.png'%}" alt="">{{date.address}}</p>
+<p>Posted At: {{date.list_date}}</p>                                    <br>
+                                    <p><i class="zmdi zmdi-account material-icons-name"> <strong>{{date.realtor}}</strong></i></p>
+                                    <div class="property-meta-data d-flex align-items-end justify-content-between">
+                                        <div class="new-tag">
+                                            <img src="{% static 'img/icons/new.png' %}" alt="">
+                                        </div>
+                                        <div class="bathroom">
+                                            <img src="{% static 'img/icons/bathtub.png'%}" alt="">
+                                            <span>{{ date.bathrooms }}</span>
+                                        </div>
+                                        <div class="garage">
+                                            <img src="{% static 'img/icons/garage.png'%}" alt="">
+                                            <span>{{ date.bedrooms }}</span>
+                                        </div>
+                                        <div class="space">
+                                            <img src="{% static 'img/icons/space.png'%}" alt="">
+                                            <span>{{date.sqft}}</span>
+                                        </div>
+
+                                    </div>
+                                     <!-- Submit -->
+                                            <div class="form-group mb-0" >
+                                                <a href="{% url 'listing' date.id %}" style="margin-top:25px; width:100%; height:30px;" class="btn south-btn">More Info</a>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+
+                {% else %}
+                    <div class="col-md-12" >
+                        <p>No Properties Available</p>
+                    </div>
+                {% endif %}
+
+            </div>
+  <div class="row">
+                <div class="col-12">
+                    {% if date_listing.has_other_pages  %}
+                            <div class="south-pagination d-flex justify-content-end">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        {% if date_listing.has_previous %}
+                                            <li class="page-item">
+                                                <a href="?page={{ date_listing.previous_page_number }}" class="page-link">&laquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&laquo;</a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for i in date_listing.paginator.page_range %}
+                                            {% if date_listing.number == i %}
+                                                <li class="page-item active">
+                                                    <a class="page-link">{{i}}</a>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item">
+                                                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                         {% if date_listing.has_next %}
+                                            <li class="page-item">
+                                                <a href="?page={{ date_listing.next_page_number }}" class="page-link">&raquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&raquo;</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Listing Content Wrapper Area End ##### -->
+
+{% endblock %}
