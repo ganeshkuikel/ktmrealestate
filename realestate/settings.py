@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'f$s=jwj8og40ve$m*2dm+xkrcle8g37(opt)ou#u6*c9)r@xt3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['ktmrealestate.herokuapp.com']
 
