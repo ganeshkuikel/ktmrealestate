@@ -37,8 +37,8 @@ class UserAuthentication(ObtainAuthToken):
 # },inplace=True)
 
 vectorizer = CountVectorizer()
-mdl=joblib.load('C:/Users/Ganesh/Documents/fyp/spam_model.pkl')
-X=pd.read_excel('C:/Users/Ganesh/Documents/fyp/test.xlsx')
+mdl=joblib.load('C:/Users/Ganesh/PycharmProjects/realestate/spam_filter/spam_model.pkl')
+X=pd.read_excel('C:/Users/Ganesh/PycharmProjects/realestate/spam_filter/test.xlsx')
 X=X[['result','comments']]
 DF = pd.DataFrame(X)
 y_pred=vectorizer.fit_transform(DF['comments'])
