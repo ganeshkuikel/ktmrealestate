@@ -1,7 +1,12 @@
-from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages,auth
 from django.contrib.auth.models import User
+from listings.models import Listing
 # Create your views here.
+from requests import request
+
+
 def register(request):
     if request.method=='POST':
         # Get values
@@ -61,6 +66,12 @@ def logout(request):
         auth.logout(request)
         messages.success(request,'You are now logout successfully')
         return redirect('login')
-
+@login_required
 def dashboard(request):
-    return render(request,'pages/dashboard.html')
+    user=request.user
+    favourite_posts = user.favorite.all()
+    context = {
+        'favourite_post':favourite_posts,
+    }
+
+    return render(request,'pages/dashboard.html',context)

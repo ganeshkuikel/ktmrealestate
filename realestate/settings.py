@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'listings.apps.ListingsConfig',
     'accounts.apps.AccountsConfig',
     'contacts.apps.ContactsConfig',
+    'spam_filter.apps.SpamFilterConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.sites',
     'django.contrib.humanize',
 
@@ -170,5 +173,16 @@ EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'sameerkunwar007@gmail.com'
 EMAIL_HOST_PASSWORD = 'sameer12345'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES' : [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ],
+#     'DEFAULT_AUTHENTICATION_CLASSES':(
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.TokenAuthentication',
+#     )
+# }
 
 

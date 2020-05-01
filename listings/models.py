@@ -2,7 +2,11 @@ from django.db import models
 from datetime import datetime
 from realtors.models import Realtor
 from django.db.models import Count
-
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.conf import settings
+from django.core.mail import send_mail
 
 
 class Listing(models.Model):
@@ -19,9 +23,6 @@ class Listing(models.Model):
     garage = models.DecimalField(max_digits=2,decimal_places=1,null=True,blank=True)
     category = models.CharField( max_length=100,null=True, blank=True)
     total_rooms = models.IntegerField(blank=True,null=True)
-    energy_features = models.CharField(max_length=100,blank=True,null=True)
-    property_type = models.CharField(max_length=100,blank=True,null=True)
-
     sqft=models.IntegerField()
     main_photo=models.ImageField(upload_to='photos/%Y/%m/%d/')
     photo_1=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
@@ -31,7 +32,7 @@ class Listing(models.Model):
     photo_5=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
     photo_6=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
     is_published=models.BooleanField(default=True)
-    is_saved = models.BooleanField(default=False)
+    favorite = models.ManyToManyField(User,related_name='favorite',blank=True)
     status = models.CharField(max_length=50,blank=True,null=True)
     year_built = models.DateTimeField(default=datetime.now(),blank=True,null=True)
     list_date=models.DateTimeField(default=datetime.now(),blank=True)
@@ -40,6 +41,14 @@ class Listing(models.Model):
     street_view = models.CharField(max_length=400, blank=True)
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return "/listings/%s" %(self.id)
+
+    def fav_counts(self):
+        return self.favorite.count()
+
+
 
 
 

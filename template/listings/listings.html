@@ -4,6 +4,58 @@
 {% block title %}| Browse Property{% endblock %}
 
 {% block content %}
+<style>
+    .si-listing__like {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48px;
+    height: 48px;
+    font-size: 1.7em;
+    color: #fff;
+    transition: color 0.3s ease-in-out,transform 0.5s ease;
+    z-index: 2;
+    text-shadow: 0px 0px 12px rgba(0,0,0,0.7), 0px 0px 9px rgba(0,0,0,0.5);
+}
+button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+.fa-heart-o:before {
+    content: "\f08a";
+}
+*:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    /* box-sizing: border-box; */
+}
+.si-container .fa {
+    font-family: FontAwesome !important;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+</style>
 
 <script type="text/javascript">
 function myFun(){
@@ -51,11 +103,7 @@ function myFun(){
                             <div class="single-featured-property mb-50">
                                 <!-- Property Thumbnail -->
                                 <div class="property-thumb">
-                                    <div id="imagecount">
                                          <img src="{{listing.main_photo.url}}" alt="">
-                                    </div>
-
-                                     <i class="fa fa-camera"  style="float:right; margin-left:10px; height:50px; width:100px;"><p id="lb-number"></p></i>
 <!--                                    <script>-->
 <!--function getImageCount() {-->
 <!--  var x = document.getElementById("imagecount").getElementsByTagName("img").length;-->

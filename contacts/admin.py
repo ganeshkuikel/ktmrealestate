@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Contact
+from django.core.mail import send_mail
 
 class ContactAdmin(admin.ModelAdmin):
     list_display = ('id','name','listing','email','contact_date')

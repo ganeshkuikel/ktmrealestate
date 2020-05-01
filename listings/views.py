@@ -1,9 +1,19 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,get_list_or_404,HttpResponseRedirect,redirect
+from pip._vendor.distro import like
 
 from .models import Listing
 from django.db import connection
 from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from  .saerch_choices import all_cities,bedroom_choices,all_states,bathroom_choices,types_choices
+from spam_filter.models import Spam_filtering
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.views.generic import View
+from django.contrib import messages
+from django.contrib.auth import REDIRECT_FIELD_NAME
+
+
+
 
 
 
@@ -31,6 +41,7 @@ def index(request):
         'all_states': all_states,
         'bathroom_choices': bathroom_choices,
         'types_choices': types_choices,
+        # 'is_saved':is_saved,
 
 
     }
@@ -146,14 +157,38 @@ def listview_pricehigh(request):
     }
     return render(request, 'listings/listview/pricehigh_listview.html', context)
 
+default_message = "You need to login first in order to continue"
+
+@login_required(login_url="/account/login")
 def listing(request,listing_id):
     listing=get_object_or_404(Listing,pk=listing_id)
+    # is_liked=False
+    # comment=CommentLikes.objects.get(pk=listing_id)
+    # if comment.likes.filter(id=request.user.id).exists():
+    #     is_liked=True
+    id=request.POST.get('user_id')
+    print(id)
+    is_favourite=False
+    if listing.favorite.filter(id=request.user.id).exists():
+        is_favourite=True
+    comments=Spam_filtering.objects.filter(listing=listing,type='ham').order_by('-id')
+
+
+
     context = {
         'listing':listing,
-
+        'comments':comments,
+        # 'is_liked':is_liked,
+        # 'total_likes':comment.total_likes(),
+        'is_favourite':is_favourite,
     }
 
     return render(request,'listings/listing.html',context)
+
+
+
+
+
 
 def search(request):
 
@@ -235,6 +270,22 @@ def search(request):
     }
 
     return render(request, 'pages/search.html', context)
+
+def favourite_post(request):
+    listing = get_object_or_404(Listing,id=request.POST.get('listing_id'))
+    is_liked=False
+    if listing.favorite.filter(id=request.user.id).exists():
+        listing.favorite.remove(request.user)
+        is_liked=False
+    else:
+        listing.favorite.add(request.user)
+        is_liked=True
+
+    return HttpResponseRedirect(listing.get_absolute_url())
+
+
+
+
 
 
 

@@ -72,10 +72,21 @@
                                 <!-- Property Thumbnail -->
                                 <div class="property-thumb">
                                     <img src="{{listing.main_photo.url}}" alt="">
-
-                                    <div class="tag">
-                                        <span>For Sale</span>
-                                    </div>
+                                     {% include 'other_files/status.html'  %}
+                                   <!--    For listing_date.html    -->
+                                {% if listing.status == 'sold' %}
+                                         <div class="si-listing__photo-label is-open-house sold">
+                                                                {{listing.status}}
+                                                            </div>
+                                 {% elif listing.status == 'active' %}
+                                        <div class="si-listing__photo-label is-open-house active">
+                                                                {{listing.status}}
+                                                            </div>
+                                  {% elif listing.status is none %}
+                                        <div class="si-listing__photo-label is-open-house none">
+                                                                {{listing.status}}
+                                                            </div>
+                                    {% endif %}
                                     <div class="list-price">
                                         <p>NRS:{{listing.price | intcomma}}</p>
                                     </div>
@@ -122,6 +133,7 @@
 
             </div>
                  <a href="{% url 'listings' %}" style="margin-bottom:25px; width:100%; height:30px;  " class="btn south-btn">More Properties</a>
+
         </div>
     </section>
     <!-- ##### Featured Properties Area End ##### -->
@@ -134,7 +146,7 @@
                     <div class="cta-content text-center">
                         <h2 class="wow fadeInUp" data-wow-delay="300ms">Are you looking for a house to buy?</h2>
                         <h6 class="wow fadeInUp" data-wow-delay="400ms">Just check our site for your choice of property.</h6>
-                        <a href="#" class="btn south-btn mt-50 wow fadeInUp" data-wow-delay="500ms">Search</a>
+                        <a href="{% url 'search' %}" class="btn south-btn mt-50 wow fadeInUp" data-wow-delay="500ms">Search</a>
                     </div>
                 </div>
             </div>
@@ -143,58 +155,19 @@
     <!-- ##### Call To Action Area End ##### -->
 
     <!-- ##### Testimonials Area Start ##### -->
-    <section class="south-testimonials-area section-padding-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading wow fadeInUp" data-wow-delay="250ms">
-                        <h2>Client testimonials</h2>
-                        <p>Our Client's view on realtor.</p>
-                    </div>
-                </div>
-            </div>
+<!--    <section class="south-testimonials-area section-padding-100">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                    <div class="section-heading wow fadeInUp" data-wow-delay="250ms">-->
+<!--                        <h2>Client testimonials</h2>-->
+<!--                        <p>Our Client's view on realtor.</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="testimonials-slides owl-carousel wow fadeInUp" data-wow-delay="500ms">
-
-                        <!-- Single Testimonial Slide -->
-                        <div class="single-testimonial-slide text-center">
-                            <h5>Perfect Home for me</h5>
-                            <p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna.</p>
-
-                            <div class="testimonial-author-info">
-                                <img src="img/bg-img/feature6.jpg" alt="">
-                                <p>Daiane Smith, <span>Customer</span></p>
-                            </div>
-                        </div>
-
-                        <!-- Single Testimonial Slide -->
-                        <div class="single-testimonial-slide text-center">
-                            <h5>Perfect Home for me</h5>
-                            <p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna.</p>
-
-                            <div class="testimonial-author-info">
-                                <img src="img/bg-img/feature6.jpg" alt="">
-                                <p>Daiane Smith, <span>Customer</span></p>
-                            </div>
-                        </div>
-
-                        <!-- Single Testimonial Slide -->
-                        <div class="single-testimonial-slide text-center">
-                            <h5>Perfect Home for me</h5>
-                            <p>Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna.</p>
-
-                            <div class="testimonial-author-info">
-                                <img src="img/bg-img/feature6.jpg" alt="">
-                                <p>Daiane Smith, <span>Customer</span></p>
-                            </div>
-                        </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!--        </div>-->
+<!--    </section>-->
     <!-- ##### Testimonials Area End ##### -->
 
     <!-- ##### Editor Area Start ##### -->
@@ -202,25 +175,33 @@
         <!-- Editor Content -->
         <div class="editor-content-area">
             <!-- Section Heading -->
+            {% if mvp_realtor %}
+            {% for realtor in mvp_realtor %}
             <div class="section-heading wow fadeInUp" data-wow-delay="250ms">
-                <img src="img/icons/prize.png" alt="">
-                <h2>jeremy Scott</h2>
-                <p>Realtor</p>
+                <img src="{% static 'img/icons/prize.png' %}" alt="">
+
+
+
+                <p>Our Realtor of the month</p>
+                 <h2>{{ realtor.name }}</h2>
             </div>
-            <p class="wow fadeInUp" data-wow-delay="500ms">Etiam nec odio vestibulum est mattis effic iturut magna. Pellentesque sit amet tellus blandit. Etiam nec odiomattis effic iturut magna. Pellentesque sit am et tellus blandit. Etiam nec odio vestibul. Etiam nec odio vestibulum est mat tis effic iturut magna. Curabitur rhoncus auctor eleifend. Fusce venenatis diam urna, eu pharetra arcu varius ac. Etiam cursus turpis lectus, id iaculis risus tempor id. Phasellus fringilla nisl sed sem scelerisque, eget aliquam magna vehicula.</p>
+
+            <p class="wow fadeInUp" data-wow-delay="500ms">{{ realtor.desciption }}</p>
             <div class="address wow fadeInUp" data-wow-delay="750ms">
-                <h6><img src="img/icons/phone-call.png" alt=""> +45 677 8993000 223</h6>
-                <h6><img src="img/icons/envelope.png" alt=""> office@template.com</h6>
+                <h6><img src="{% static 'img/icons/phone-call.png' %}" alt=""> {{  realtor.phone }} </h6>
+                <h6><img src="{% static 'img/icons/envelope.png' %}" alt=""> {{ realtor.email }}</h6>
             </div>
             <div class="signature mt-50 wow fadeInUp" data-wow-delay="1000ms">
-                <img src="img/core-img/signature.png" alt="">
+                <img src="{% static 'img/core-img/signature.png' %}" alt="">
             </div>
         </div>
 
         <!-- Editor Thumbnail -->
         <div class="editor-thumbnail">
-            <img src="img/bg-img/editor.jpg" alt="">
+            <img src="{{realtor.photo.url}}" alt="">
         </div>
+        {% endfor %}
+        {% endif %}
     </section>
     <!-- ##### Editor Area End ##### -->
 

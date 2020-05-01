@@ -149,7 +149,7 @@
                 <div class="col-12">
                     <div class="cta-content text-center">
                         <h2 class="wow fadeInUp" data-wow-delay="300ms">Are you looking for a place to rent?</h2>
-                        <h6 class="wow fadeInUp" data-wow-delay="400ms">Suspendisse dictum enim sit amet libero malesuada feugiat.</h6>
+                        <h6 class="wow fadeInUp" data-wow-delay="400ms">Just check our site for your choice of property.</h6>
                         <a href="#" class="btn south-btn mt-50 wow fadeInUp" data-wow-delay="500ms">Search</a>
                     </div>
                 </div>
@@ -163,8 +163,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading">
-                        <h2>Meet The Team</h2>
-                        <p>Suspendisse dictum enim sit amet libero</p>
+                        <h2>Meet Our Team</h2>
                     </div>
                 </div>
             </div>
@@ -202,6 +201,49 @@
                 {% endif %}
 
 
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {% if realtor.has_other_pages  %}
+                            <div class="south-pagination d-flex justify-content-end">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        {% if realtor.has_previous %}
+                                            <li class="page-item">
+                                                <a href="?page={{ realtor.previous_page_number }}" class="page-link">&laquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&laquo;</a>
+                                            </li>
+                                        {% endif %}
+
+                                        {% for i in realtor.paginator.page_range %}
+                                            {% if realtor.number == i %}
+                                                <li class="page-item active">
+                                                    <a class="page-link">{{i}}</a>
+                                                </li>
+                                            {% else %}
+                                                <li class="page-item">
+                                                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                         {% if realtor.has_next %}
+                                            <li class="page-item">
+                                                <a href="?page={{ realtor.next_page_number }}" class="page-link">&raquo;</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled">
+                                                <a class="page-link">&raquo;</a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </section>

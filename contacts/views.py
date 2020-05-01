@@ -2,9 +2,11 @@ from django.shortcuts import render,redirect
 from .models import Contact
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
-
+@login_required(login_url="/account/login")
 def contact(request):
     if request.method=='POST':
         listing_id = request.POST['listing_id']
@@ -25,6 +27,7 @@ def contact(request):
             if has_contacted:
                 messages.error(request,"You have already made an enquiry for this listing")
                 return redirect('/listings/' + listing_id)
+
 
 
 

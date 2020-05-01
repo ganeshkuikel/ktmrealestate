@@ -167,6 +167,121 @@ margin-top:300px;
     margin-left: 10px;
 }
 
+.cmtslist{
+border-radius: 5%;
+background-color: #e5e5e5;
+font-type:bold;
+}
+.comment-list {
+    padding-top: 25px;
+    border-top: 1px solid;
+}
+ol, ul {
+    padding: 0;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+    height:auto;
+}
+.comment-meta {
+    margin-bottom: 25px;
+}
+.comment-meta > div {
+    display: inline-block;
+}
+.comment-author {
+    margin-right: 15px;
+    font-size: 14px;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+.comment-author b {
+    font-size: 16px!important;
+    font-family: 'Montserrat';
+    font-weight: 700;
+}
+.comment-list li article {
+    background: #C3EEC3!important;
+    padding: 20px 0;
+    position: relative;
+}
+.vlog-comments .comment-body {
+    margin-bottom: 36px;
+}
+article{
+display:block;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+.comment-content {
+    font-size: 23px!important;
+    line-height: 26px!important;
+    padding: 6px;
+}
+.comment-content {
+    color: rgba(17,17,17,0.8);
+}
+.comment-content {
+    clear: both;
+    font-size: 13px;
+    line-height: 25px;
+    margin-left: 78px;
+}
+.cld-like-dislike-wrap {
+    float: right;
+}
+.cld-like-dislike-wrap {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.comment-content {
+    font-size: 23px!important;
+    line-height: 26px!important;
+    padding: 6px;
+}
+.cld-like-dislike-wrap .cld-common-wrap {
+    margin-right: 10px;
+    font-family:bold;
+}
+.cld-common-wrap {
+    min-width: 30px!important;
+}
+.cld-common-wrap {
+    display: inline-block;
+    min-width: 50px;
+}
+.fa {
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa, .fa-stack {
+    display: inline-block;
+}
+
+.cld-count-wrap {
+    margin-left: 5px;
+}
+.cld-common-wrap {
+    min-width: 30px!important;
+}
+.cld-common-wrap {
+    display: inline-block;
+    min-width: 50px;
+}
+
+
+
+
+
+
+
 
  </style>
 <!-- ##### Breadcumb Area Start ##### -->
@@ -198,7 +313,26 @@ margin-top:300px;
 
                         <h1><strong>Title: {{listing.title}} </strong></h1>
                         <div class="new-tag">
-                                <img src="{% static 'img/icons/new.png' %}" alt=""> <br>
+                            <img src="{% static 'img/icons/new.png' %}" alt="">
+                            <div id="favourite-section">
+                                <form action="{% url 'favourite_post' %}" method="post" >
+                                    {% csrf_token %}
+                                     {% if user.is_authenticated %}
+                                    <input type="hidden" name="user_id" value="{{user.id}}">
+                                    {% endif %}
+                                    {% if is_favourite %}
+                                     <button type="submit" style="background:none; border:none;" name="listing_id" value="{{ listing.id }}"><i class="fas fa-heart fa-lg">  Saved</i></button>
+                                {% else %}
+                                <button type="submit" style="background:none; border:none" name="listing_id" value="{{ listing.id }}"> <i class="far fa-heart fa-lg">  Save</i></button>
+                                    {% endif %}
+                                </form>
+
+
+
+
+                        </div>
+
+                            <br>
                             </div> <br>
                              <div class="row">
 <!--                        <div class="col-md-9">-->
@@ -539,9 +673,32 @@ for (var i = 0; i < btns.length; i++) {
         <div class="contact-realtor-wrapper" style="background:white">
 <div class="col-12">
                     <div class="form-group">
-                        <h2>Comments: </h2>
+
+                             <h2>Comments: </h2>
+                         <form action="{% url 'detect_spam' listing.id %}" method="post">
+                            {% csrf_token %}
+                                <input type="hidden" name="user_id" value="{{ comments.user.username }}">
+                              <input type="hidden" name="listing_id_value" value="{{ listing.id }}">
+                              <input type="hidden" name="type">
                                         <textarea name="message" class="form-control" id="realtor-message" cols="30" rows="10" placeholder="Write Your Comment on the house"></textarea>
-                                    </div>
+                                        <input type="submit" style="background-color:#947054; border:none;" value="Post" class="btn btn-block btn-secondary">
+                        </form>
+                         </div>
+
+    <div class="main-comment-section">
+        {{ comments.count }} Comment {{ comments|pluralize }}
+
+        {% for comment in comments %}
+            <blockquote class="blockquote">
+                <p class="mb-o">{{ comment.comments }}</p>
+                <footer class="blackquote-footer">by  <cite title="Source Title">{{ comment.user |  capfirst }}</cite> </footer>
+            </blockquote>
+        {% endfor %}
+    </div>
+
+
+
+
                 </div>
             </div>
             </div>

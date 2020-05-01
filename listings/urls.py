@@ -1,4 +1,5 @@
 from django.urls import  path
+from django.conf.urls import url
 from . import views
 
 urlpatterns=[path('',views.index,name='listings'),
@@ -11,4 +12,5 @@ urlpatterns=[path('',views.index,name='listings'),
              path('new_date_list',views.listview_newdate,name='new_date_list'),
              path('price_low',views.listview_pricelow,name='price_low'),
              path('price_high',views.listview_pricehigh,name='price_high'),
-             ]
+             url(r'^favourite_post/$',views.favourite_post,name='favourite_post'),
+]
