@@ -15,6 +15,7 @@ from listings.models import Listing
 from sklearn.externals import joblib
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
+import os
 
 
 class UserAuthentication(ObtainAuthToken):
@@ -37,8 +38,14 @@ class UserAuthentication(ObtainAuthToken):
 # },inplace=True)
 
 vectorizer = CountVectorizer()
-mdl=joblib.load('C:/Users/Ganesh/PycharmProjects/realestate/spam_filter/spam_model.pkl')
-X=pd.read_excel('C:/Users/Ganesh/PycharmProjects/realestate/spam_filter/test.xlsx')
+modulePath = os.path.dirname(__file__)  # get current directory
+print(modulePath)
+filePath = os.path.join(modulePath, 'spam_model.pkl')
+with open(filePath, 'rb') as f:
+    mdl=joblib.load(f)
+xlfile = os.path.join(modulePath, 'test.xlsx')
+with open(xlfile, 'rb') as g:
+    X=pd.read_excel(g)
 X=X[['result','comments']]
 DF = pd.DataFrame(X)
 y_pred=vectorizer.fit_transform(DF['comments'])
