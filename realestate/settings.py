@@ -100,17 +100,26 @@ WSGI_APPLICATION = 'realestate.wsgi.application'
 #     }
 # }
 
-DATABASES = {
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'realestate',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
+ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'realestate',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'NAME': 'ktmrealestates',
+        'USER': 'ganesh1234',
+        'PASSWORD': 'createpassword$',
+        'HOST': 'db4free.net',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -172,8 +181,8 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'sameerkunwar007@gmail.com'
-EMAIL_HOST_PASSWORD = 'sameer12345'
+EMAIL_HOST_USER = 'ktmrealestate78@gmail.com'
+EMAIL_HOST_PASSWORD = 'ktmrealestate1'
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES' : [

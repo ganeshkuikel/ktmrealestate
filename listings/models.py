@@ -39,6 +39,18 @@ class Listing(models.Model):
     location=models.CharField(max_length=400,blank=True)
     aerial_view = models.CharField(max_length=400, blank=True)
     street_view = models.CharField(max_length=400, blank=True)
+
+    # Send Email to all users that are registered that admin has published a new listing.
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.title:
+            subject="A new listings has been added by KTMRealEstate named: "+self.title
+            message="Description: "+self.description 
+            recievers = []
+            recievers = User.objects.values_list('email', flat=True)
+            print(recievers)
+            send_mail(subject,message,'ktmrealestate78@gmail.com',recievers,fail_silently = False)
+            print("sent")
     def __str__(self):
         return self.title
 
@@ -47,6 +59,8 @@ class Listing(models.Model):
 
     def fav_counts(self):
         return self.favorite.count()
+
+    
 
 
 

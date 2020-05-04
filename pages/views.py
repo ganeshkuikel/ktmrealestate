@@ -4,7 +4,9 @@ from realtors.models import Realtor
 from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from  listings.saerch_choices import all_cities,bedroom_choices,all_states,bathroom_choices,types_choices
+
 def index(request):
+
     listings=Listing.objects.all().filter(is_published=True)[:3]
     realtors=Realtor.objects.all()
     # Get mvp realtor of the month

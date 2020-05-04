@@ -100,11 +100,23 @@
                                                                     </div>
                                  </a>
 
-                                <div class="tag">
-                                    <span>For Sale</span>
-                                </div>
+                               {% include 'other_files/status.html'  %}
+                                   <!--    For listing_date.html    -->
+                                {% if listing.status == 'sold' %}
+                                         <div class="si-listing__photo-label is-open-house sold">
+                                                                {{listing.status}}
+                                                            </div>
+                                 {% elif listing.status == 'active' %}
+                                        <div class="si-listing__photo-label is-open-house active">
+                                                                {{listing.status}}
+                                                            </div>
+                                  {% elif listing.status is none %}
+                                        <div class="si-listing__photo-label is-open-house none">
+                                                                {{listing.status}}
+                                                            </div>
+                                    {% endif %}                         
                                 <div class="list-price">
-                                    <p>{{ listing.price | intcomma }}</p>
+                                    <p>NRS:{{ listing.price | intcomma }}</p>
                                 </div>
                             </div>
                             <!-- Property Content -->

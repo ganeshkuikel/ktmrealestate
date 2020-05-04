@@ -40,7 +40,7 @@ def contact(request):
         send_mail(
             'Property Listing Inquiry',
             'A new inquiry has been posted for ' + listing + ' Sign into the admin panel for more info',
-            'sameerkunwar007@gmail.com',
+            'ktmrealestate78@gmail.com',
             [realtor_email,'ganeshkuikel66@gmail.com'],
             fail_silently=False
         )
