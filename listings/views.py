@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404,get_list_or_404,HttpResponseRedirect,redirect
 from pip._vendor.distro import like
 
-from .models import Listing
+from .models import Listing,ListingImage
 from django.db import connection
 from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from  .saerch_choices import all_cities,bedroom_choices,all_states,bathroom_choices,types_choices
@@ -21,21 +21,13 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 # Main listing page
 def index(request):
     listings = Listing.objects.all()
-
-    cursor = connection.cursor()
-    cursor.execute('''SELECT 
-          COUNT(NULLIF(photo_1,''))+COUNT(NULLIF(photo_2,''))+COUNT(NULLIF(photo_3,''))+COUNT(NULLIF(photo_4,''))+
-          COUNT(NULLIF(photo_5,''))+COUNT(NULLIF(photo_6,''))+COUNT(NULLIF(main_photo,''))as 'total'
-          FROM listings_listing WHERE id =4''')
-    row = cursor.fetchone()
-    print(row)
-
+    photos=ListingImage.objects.filter(photo__in=listings)
     paginator = Paginator(listings,3)
     page=request.GET.get('page')
     paged_listings=paginator.get_page(page)
     context = {
-           'listings': paged_listings,
-        'total_count':row,
+        'listings': paged_listings,
+        'photos':photos,
         'all_cities': all_cities,
         'bedroom_choices': bedroom_choices,
         'all_states': all_states,
@@ -96,6 +88,7 @@ def high_to_low(request):
 # List view sorting functions
 def list_view(request):
     listings = Listing.objects.all()
+    
     paginator = Paginator(listings, 3)
     page = request.GET.get('page')
     paged_listings = paginator.get_page(page)
@@ -103,6 +96,7 @@ def list_view(request):
     context = {
         # 'listings': paged_listings,
         'listings': paged_listings,
+        
         'all_cities': all_cities,
         'bedroom_choices': bedroom_choices,
         'all_states': all_states,
@@ -162,6 +156,7 @@ default_message = "You need to login first in order to continue"
 @login_required(login_url="/account/login")
 def listing(request,listing_id):
     listing=get_object_or_404(Listing,pk=listing_id)
+    photos=ListingImage.objects.filter(photo=listing)
     # is_liked=False
     # comment=CommentLikes.objects.get(pk=listing_id)
     # if comment.likes.filter(id=request.user.id).exists():
@@ -181,6 +176,7 @@ def listing(request,listing_id):
         # 'is_liked':is_liked,
         # 'total_likes':comment.total_likes(),
         'is_favourite':is_favourite,
+        'photos':photos,
     }
 
     return render(request,'listings/listing.html',context)
@@ -192,7 +188,7 @@ def listing(request,listing_id):
 
 def search(request):
 
-    query_list = Listing.objects.order_by('-list_date')
+     query_list = Listing.objects.order_by('-list_date')
 
     # Types
     if 'categories' in request.GET:

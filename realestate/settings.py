@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from django.conf import settings; 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -89,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'realestate.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -100,26 +99,26 @@ WSGI_APPLICATION = 'realestate.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'realestate',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
-#     }
-# }
- DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ktmrealestates',
-        'USER': 'ganesh1234',
-        'PASSWORD': 'createpassword$',
-        'HOST': 'db4free.net',   # Or an IP Address that your DB is hosted on
+        'NAME': 'realestate',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
+#  DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ktmrealestates',
+#         'USER': 'ganesh1234',
+#         'PASSWORD': 'createpassword$',
+#         'HOST': 'db4free.net',   # Or an IP Address that your DB is hosted on
+#         'PORT': '3306',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -184,6 +183,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ktmrealestate78@gmail.com'
 EMAIL_HOST_PASSWORD = 'ktmrealestate1'
 
+
+
+
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES' : [
 #         'rest_framework.permissions.IsAuthenticated',
@@ -194,5 +196,8 @@ EMAIL_HOST_PASSWORD = 'ktmrealestate1'
 #         'rest_framework.authentication.TokenAuthentication',
 #     )
 # }
+
+
+
 
 

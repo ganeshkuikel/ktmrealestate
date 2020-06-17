@@ -430,7 +430,7 @@ div {
                                                             <a  href="{% url 'listing' listing.id%}">
                                                                 <div class="si-listing__photo-img js-images">
                                                                     <div class="example">
-                                                                         <img  src="{{listing.main_photo.url}}" alt="">
+                                                                         <img  src="{{listing.first_image.image.url}}" alt="">
 
                                                                     <div class="content">
                                                                         <div class="text">More Info</div>
@@ -488,9 +488,9 @@ div {
                                                                  <div class="si-listing__info-value_date">
                                                                       <p>Posted At:  {{listing.list_date}}</p>
                                                              </div>
-                                                            <div class="si-listing__info-value_location">
+                                      <div class="si-listing__info-value_location">
                                                              {% if listing.location %}
-                                                                <iframe width="100%" height="50px" src="{{ listing.location }}"></iframe>
+                                              <iframe width="100%" height="50px" src="{{ listing.location }}"></iframe>
                                                              {% else %}
                                                                 <p>Location not mentioned Please contact realtor</p>
                                                              {% endif %}

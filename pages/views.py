@@ -34,3 +34,6 @@ def aboutus(request):
         'realtor':paged_listings,
     }
     return render(request,'pages/about-us.html',context)
+
+def contact(request):
+    return render(request,'pages/contact.html')

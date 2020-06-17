@@ -7,30 +7,25 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.conf import settings
 from django.core.mail import send_mail
+from django.utils import timezone
+
 
 
 class Listing(models.Model):
     realtor = models.ForeignKey(Realtor,on_delete=models.DO_NOTHING)
     title=models.CharField(max_length=150)
-    address=models.CharField(max_length=150)
-    city=models.CharField(max_length=100)
-    state=models.CharField(max_length=100)
-    district=models.CharField(max_length=100)
+    address=models.CharField(max_length=150,null=True)
+    city=models.CharField(max_length=100,null=True)
+    state=models.CharField(max_length=100,null=True)
+    district=models.CharField(max_length=100,null=True)
     description=models.TextField(blank=True)
     price=models.IntegerField()
-    bedrooms=models.IntegerField()
-    bathrooms=models.DecimalField(max_digits=2,decimal_places=1,blank=True)
+    bedrooms=models.IntegerField(null=True)
+    bathrooms=models.DecimalField(max_digits=2,decimal_places=1,blank=True,null=True)
     garage = models.DecimalField(max_digits=2,decimal_places=1,null=True,blank=True)
     category = models.CharField( max_length=100,null=True, blank=True)
     total_rooms = models.IntegerField(blank=True,null=True)
-    sqft=models.IntegerField()
-    main_photo=models.ImageField(upload_to='photos/%Y/%m/%d/')
-    photo_1=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
-    photo_2=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
-    photo_3=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
-    photo_4=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
-    photo_5=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
-    photo_6=models.ImageField(upload_to='photos/%Y/%m/%d/',blank=True,null=True)
+    sqft=models.IntegerField(null=True,blank=True)
     is_published=models.BooleanField(default=True)
     favorite = models.ManyToManyField(User,related_name='favorite',blank=True)
     status = models.CharField(max_length=50,blank=True,null=True)
@@ -49,7 +44,7 @@ class Listing(models.Model):
             recievers = []
             recievers = User.objects.values_list('email', flat=True)
             print(recievers)
-            send_mail(subject,message,'ktmrealestate78@gmail.com',recievers,fail_silently = False)
+            # send_mail(subject,message,'ktmrealestate78@gmail.com',recievers,fail_silently = False)
             print("sent")
     def __str__(self):
         return self.title
@@ -59,6 +54,18 @@ class Listing(models.Model):
 
     def fav_counts(self):
         return self.favorite.count()
+
+    def first_image(self):
+         return self.images.first()
+
+
+class ListingImage(models.Model):
+    photo = models.ForeignKey(Listing,default=None,on_delete=models.CASCADE,related_name='images')
+    image = models.ImageField(upload_to='photos/%Y/%m/%d/')
+
+    def __str__(self):
+        return self.photo.title
+
 
     
 
