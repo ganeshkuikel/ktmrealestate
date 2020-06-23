@@ -109,16 +109,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-#  DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ktmrealestates',
-#         'USER': 'ganesh1234',
-#         'PASSWORD': 'createpassword$',
-#         'HOST': 'db4free.net',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
-#     }
-# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
