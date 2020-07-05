@@ -99,14 +99,25 @@ WSGI_APPLICATION = 'realestate.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.mysql',
+   #     'NAME': 'realestate',
+    #    'USER': 'root',
+     #   'PASSWORD': '',
+      #  'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+       # 'PORT': '3306',
+    #}
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'realestate',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+         'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ktmrealestate',
+        'USER':'postgres',
+        'PASSWORD':'root',
+        'HOST':'127.0.0.1',
+        'PORT': '5432'
     }
 }
 

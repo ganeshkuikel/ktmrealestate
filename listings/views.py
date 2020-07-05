@@ -188,7 +188,7 @@ def listing(request,listing_id):
 
 def search(request):
 
-     query_list = Listing.objects.order_by('-list_date')
+    query_list = Listing.objects.order_by('-list_date')
 
     # Types
     if 'categories' in request.GET:
