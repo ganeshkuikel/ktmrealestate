@@ -63,6 +63,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -112,20 +113,9 @@ WSGI_APPLICATION = 'realestate.wsgi.application'
     #}
 #}
 
-if 'RDS_DB_NAME' in os.environ:
-     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
-    }
-else:
 
-    DATABASES = {
+
+DATABASES = {
         'default': {
              'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'ktmrealestate',
@@ -134,7 +124,7 @@ else:
             'HOST':'127.0.0.1',
             'PORT': '5432'
         }
-    }
+}
 
 
 # Password validation
@@ -176,6 +166,24 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'realestate/static')]
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+# STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "static"),
+# )
+
+# STATIC_ROOT = os.path.join(BASE_DIR, "realestate/static", "static-root")
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+#STATIC_ROOT = "/home/cfedeploy/webapps/cfehome_static_root/"
+
+MEDIA_URL = "/media/"
+
 
 SITE_ID=1
 LOGIN_REDIRECT_URL="dashboard"
