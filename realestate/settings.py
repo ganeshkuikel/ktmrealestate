@@ -113,16 +113,29 @@ WSGI_APPLICATION = 'realestate.wsgi.application'
     #}
 #}
 
-DATABASES = {
-    'default': {
-         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ktmrealestate',
-        'USER':'postgres',
-        'PASSWORD':'root',
-        'HOST':'127.0.0.1',
-        'PORT': '5432'
+if 'RDS_DB_NAME' in os.environ:
+     DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    
+    DATABASES = {
+        'default': {
+             'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'ktmrealestate',
+            'USER':'postgres',
+            'PASSWORD':'root',
+            'HOST':'127.0.0.1',
+            'PORT': '5432'
+        }
+    }
 
 
 # Password validation
