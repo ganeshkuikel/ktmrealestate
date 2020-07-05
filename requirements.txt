@@ -7,12 +7,10 @@ Django==2.1
 django-allauth==0.41.0
 -e git+https://github.com/django-extensions/django-extensions.git@eb07b37ce3c36e56938b5de6fdb180b5b5530319#egg=django_extensions
 django-heroku==0.3.1
-djangorestframework==3.11.0
 gunicorn==20.0.4
 idna==2.8
 joblib==0.14.1
-nltk==3.4.5
-numpy==1.18.2
+numpy==1.19.0
 oauthlib==3.1.0
 pandas==1.0.3
 Pillow==7.0.0
@@ -21,7 +19,6 @@ psycopg2-binary==2.8.5
 pycodestyle==2.5.0
 pydot==1.4.1
 pydotplus==2.0.2
-PyMySQL==0.9.3
 pyparsing==2.4.7
 python-dateutil==2.8.1
 python3-openid==3.1.0

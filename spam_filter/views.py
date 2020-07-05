@@ -2,14 +2,7 @@ from django.shortcuts import redirect
 from sklearn.metrics import accuracy_score
 from .models import Spam_filtering
 from django.contrib import messages
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
 from django.http import JsonResponse
-from .serializers import Spam_filteringSerializers
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
 from django.contrib.auth.decorators import login_required
 from listings.models import Listing
 from sklearn.externals import joblib
@@ -18,15 +11,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 import os
 from sklearn.metrics import confusion_matrix 
 
-
-
-class UserAuthentication(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        serializer =self.serializer_class(data=request.data,context={'request':request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token , created = Token.objects.get_or_create(user=user)
-        return Response(token.key)
 
 vectorizer = CountVectorizer()
 modulePath = os.path.dirname(__file__)  # get current directory
@@ -62,14 +46,14 @@ def Convert(string):
     return li
 
 # Create your views here.
-def api_sentiment_pred(request):
-    comment = request.GET['comments']
-    example_counts = vectorizer.transform(Convert(comment))
-    listToString(comment)
-    predictions = mdl.predict(example_counts)
-    print(predictions)
-    confusion_matrix(y_test, predictions)
-    return (JsonResponse(listToString(predictions), safe=False))
+# def api_sentiment_pred(request):
+#     comment = request.GET['comments']
+#     example_counts = vectorizer.transform(Convert(comment))
+#     listToString(comment)
+#     predictions = mdl.predict(example_counts)
+#     print(predictions)
+#     confusion_matrix(y_test, predictions)
+#     return (JsonResponse(listToString(predictions), safe=False))
 
 @login_required(login_url="/account/login")
 def detect_spam(request,listing_id):
@@ -93,40 +77,6 @@ def detect_spam(request,listing_id):
 
 
             return redirect('/listings/'+listing_id )
-
-
-
-
-
-
-
-
-
-class SpamView(viewsets.ModelViewSet):
-
-    queryset = Spam_filtering.objects.all()
-    serializer_class = Spam_filteringSerializers
-
-
-
-
-class SpamList(APIView):
-
-    def get(self,request):
-        model = Spam_filtering.objects.all()
-        serializer = Spam_filteringSerializers(model,many=True)
-        return Response(serializer.data)
-
-
-
-
-    def post(self,request):
-        serializer = Spam_filteringSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
 
 
 
