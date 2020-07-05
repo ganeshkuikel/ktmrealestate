@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from django.conf import settings; 
+import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -182,10 +183,10 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'ktmrealestate78@gmail.com'
+EMAIL_HOST_PASSWORD = 'ktmrealestate1'
 
-
+django_heroku.settings(locals())
 
 
 # REST_FRAMEWORK = {
