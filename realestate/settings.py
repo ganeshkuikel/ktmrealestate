@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from django.conf import settings; 
-import django_heroku
+# import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,8 +27,8 @@ with open('realestate/secret_key.txt') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ktmrealestate.herokuapp.com']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['ktmrealestate.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'contacts.apps.ContactsConfig',
     'spam_filter.apps.SpamFilterConfig',
-    # 'rest_framework',
+    'rest_framework',
     # 'rest_framework.authtoken',
     'django.contrib.sites',
     'django.contrib.humanize',
@@ -63,7 +63,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -90,7 +89,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'realestate.wsgi.application'
+# WSGI_APPLICATION = 'realestate.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -168,7 +167,7 @@ STATIC_ROOT=os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'realestate/static')]
 
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 SITE_ID=1
@@ -194,7 +193,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ktmrealestate78@gmail.com'
 EMAIL_HOST_PASSWORD = 'ktmrealestate1'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 
 # REST_FRAMEWORK = {
@@ -208,9 +207,9 @@ django_heroku.settings(locals())
 #     )
 # }
 
-import dj_database_url
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+# db_from_env = dj_database_url.config()
+# DATABASES['default'].update(db_from_env)
 
 
 

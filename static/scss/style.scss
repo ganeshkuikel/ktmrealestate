@@ -508,7 +508,7 @@ img {
     position: relative;
     z-index: 1;
     height: 45px;
-    background-color: $color-dark;
+    background-color: #006aff;
     @media #{$breakpoint-xs} {
         height: auto;
     }
@@ -532,11 +532,11 @@ img {
     }
     .phone-number {
         line-height: 1;
-        background-color: $bg-default;
+        background-color: #006aff;
         height: 45px;
         margin-bottom: 0;
         .icon {
-            background-color: $color-white;
+            background-color: #006aff;
             width: 45px;
             height: 45px;
             text-align: center;
@@ -548,7 +548,7 @@ img {
         .number {
             a {
                 padding: 0 60px;
-                color: $color-white;
+                color: #006aff;
                 line-height: 45px;
                 font-size: 12px;
             }

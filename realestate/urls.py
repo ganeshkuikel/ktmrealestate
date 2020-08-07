@@ -28,5 +28,6 @@ path('account/',include('accounts.urls')),
 path('contacts/',include('contacts.urls')),
 path('spam_filter/',include('spam_filter.urls')),
     path('account/',include('allauth.urls')),
+    path('realtors/',include('realtors.urls')),
    
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

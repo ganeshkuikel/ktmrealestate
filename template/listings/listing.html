@@ -462,7 +462,7 @@ display:block;
 <!-- The Modal -->
 
  <!-- Inquiry Modal -->
-  <div  id="myModal" class="modal">
+  <div  id="myModal" class="modal" >
       <div class="model-dialog">
           <div class="modal-content">
         <div class="modal-header"  style="background-color:#947054; border:none;">
@@ -475,7 +475,7 @@ display:block;
           <form action="{% url 'contacts' %}" method="post">
               {% csrf_token %}
               {% if user.is_authenticated %}
-                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <input type="hidden" name="user_id" value="{{ request.user.username }}">
               {% else %}
 
               <input type="hidden" name="user_id" value="0">
@@ -490,7 +490,7 @@ display:block;
             <div class="form-group">
               <input type="text" name="name" placeholder="Enter your name" class="form-control"
                      {% if user.is_authenticated %}
-                        value="{{ user.first_name }} {{ user.last_name }}"
+                        value="{{ request.user.first_name }} {{ request.user.last_name }}"
                      {% endif %} required>
             </div>
             <div class="form-group">

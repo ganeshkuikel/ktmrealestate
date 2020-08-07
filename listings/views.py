@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.views.generic import View
 from django.contrib import messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
-
+from accounts.decoraters import allowed_users,admin_and_realtors
 
 
 
@@ -154,6 +154,7 @@ def listview_pricehigh(request):
 default_message = "You need to login first in order to continue"
 
 @login_required(login_url="/account/login")
+# @admin_only
 def listing(request,listing_id):
     listing=get_object_or_404(Listing,pk=listing_id)
     photos=ListingImage.objects.filter(photo=listing)

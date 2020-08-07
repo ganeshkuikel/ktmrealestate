@@ -1,6 +1,6 @@
 {%load static%}
  <!-- Preloader -->
-<div >
+<div>
     <div id="preloader"  >
         <div class="south-load"></div>
     </div>
@@ -11,9 +11,9 @@
         <div class="top-header-area">
             <div class="h-100 d-md-flex justify-content-between align-items-center" >
                 <div class="email-address">
-                    <a href="https://mail.google.com/mail/u/0/#inbox">ktmrealestate78@gmail.com</a>
+                    <a href="https://mail.google.com/mail/u/0/#inbox" style="color: #947054;">ktmrealestate78@gmail.com</a>
                 </div>
-                <div class="phone-number d-flex">
+                <div class="phone-number d-flex" style="background-color: #947054;">
                     <div class="icon">
                         <img src="{% static 'img/icons/phone-call.png'%}" alt="">
                     </div>
@@ -25,9 +25,9 @@
         </div>
 
         <!-- Main Header Area -->
-        <div class="main-header-area" id="stickyHeader">
+        <div class="main-header-area"  id="stickyHeader">
 
-        <div class="classy-nav-container breakpoint-off dark left">
+        <div class="classy-nav-container  breakpoint-off dark left" style="background-color: black;">
                 <!-- Classy Menu -->
                 <nav class="classy-navbar justify-content-between" id="southNav">
 
@@ -52,20 +52,20 @@
                             <ul>
                                 <li>
                                 <a {% if '/' == request.path  %}
-                                    style="color:white;"
+                                    style="color:#d3d3d3;"
                                  {% else %}
                                     style="color:#947054"
                                  {% endif %} style="color:black;" href="{% url 'index' %}">Home</a></li>
                                 <li><a
                                          {% if 'aboutus' in request.path  %}
-                                            style="color:white;"
+                                            style="color:#d3d3d3;"
                                          {% else %}
                                             style="color:#947054"
                                          {% endif %}
                                                 style="color:black;" href="{% url 'aboutus' %}" >About Us</a></li>
                                 <li><a
                                         {% if 'listings' in request.path %}
-                                            style="color:white;"
+                                            style="color:#d3d3d3;"
                                         {% else %}
                                              style="color:#947054"
                                         {% endif %}
@@ -73,7 +73,7 @@
 
 
                                 <li><a {% if 'contact' in request.path %}
-                                            style="color:white;"
+                                            style="color:#d3d3d3;"
                                         {% else %}
                                              style="color:#947054"
                                         {% endif %}
@@ -81,7 +81,7 @@
                                  {% if user.is_authenticated %}
                                       <li><a
                                             {% if 'dashboard' in request.path  %}
-                                        style="color:white;"
+                                        style="color:#d3d3d3;"
                                      {% else %}
                                         style="color:#947054"
                                      {% endif %}
@@ -95,11 +95,27 @@
                                               <input type="hidden">
                                           </form>
                                       </li>
+                                      <!-- Realtor dropdown menu -->
+                                      {% for group in request.user.groups.all %}
+                                      {% if group.name == 'realtor' or group.name == 'admin' %}
+                                      <li class="dropdown">
+                    <button type="button" class="btn" style="color:#947054;" data-toggle="dropdown">
+<i class="fas fa-chevron-circle-down fa-2x"></i>    
+    </button>
+    <div class="dropdown-menu" style="background-color: black">
+      <a class="dropdown-item" href="{% url 'realtor_index' %}" style="color:#947054; ">Realtor</a>
+    </div>
+                                   
+
+  </li>
+  {% endif %}
+  {% endfor %}
+
 
                                  {% else %}
                                     <li><a
                                             {% if 'login' in request.path  %}
-                                        style="color:white;"
+                                        style="color:#d3d3d3;"
                                      {% else %}
                                         style="color:#947054"
                                      {% endif %}
@@ -111,27 +127,30 @@
 
                                     <li><a
                                               {% if 'register' in request.path  %}
-                                        style="color:white;"
+                                        style="color:#d3d3d3;"
                                      {% else %}
                                          style="color:#947054"
                                      {% endif %}
                                             style="color:black;" href="{% url 'register_page' %}">Register</a></li>
                                  {% endif %}
+                                 
+
 
                             </ul>
-
                             <!-- Search Form -->
-                           <!--  <div class="south-search-form">
-
-                                <form action="{% url 'search' %}">
-                                    <input type="search" name="search" id="search" placeholder="Search Anything ..." value="{{ values.city }}">
+                            <div class="south-search-form">
+                                <form action="{% url 'search' %}" method="post">
+                                  {% csrf_token %}
+                                    <input type="search" name="search" id="search" placeholder="Search Anything ...">
                                     <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                 </form>
-                            </div> -->
-
+                            </div>
                             <!-- Search Button -->
-                            <a href="{% url 'search' %}" class="searchbtn"><i class="fa" aria-hidden="true"></i></a>
+                            <a href="#" class="searchbtn"><i class="fa" aria-hidden="true"></i></a>
+                           
                         </div>
+
+                        
                         <!-- Nav End -->
                     </div>
                 </nav>
@@ -139,3 +158,4 @@
              </div>
     </header>
     </div>
+

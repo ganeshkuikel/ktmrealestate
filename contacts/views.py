@@ -9,14 +9,14 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url="/account/login")
 def contact(request):
     if request.method=='POST':
-        listing_id = request.POST['listing_id']
-        listing = request.POST['listing']
-        name = request.POST['name']
-        email = request.POST['email']
-        phone = request.POST['phone']
-        message = request.POST['message']
-        user_id = request.POST['user_id']
-        realtor_email = request.POST['realtor_email']
+        if user.is_authenticated:
+            listing_id = request.POST['listing_id']
+            listing = request.POST['listing']
+            name = request.user.first_name + " " + request.user.last_name
+            email = request.user.email
+            phone = request.POST['phone']
+            message = request.POST['message']
+            realtor_email = request.POST['realtor_email']
 
 
         # Check user inquiry made or not
@@ -37,13 +37,13 @@ def contact(request):
 
         # Email Send
 
-        send_mail(
-            'Property Listing Inquiry',
-            'A new inquiry has been posted for ' + listing + ' Sign into the admin panel for more info',
-            'ktmrealestate78@gmail.com',
-            [realtor_email,'ganeshkuikel66@gmail.com'],
-            fail_silently=False
-        )
+        # send_mail(
+        #     'Property Listing Inquiry',
+        #     'A new inquiry has been posted for ' + listing + ' Sign into the admin panel for more info',
+        #     'ktmrealestate78@gmail.com',
+        #     [realtor_email,'ganeshkuikel66@gmail.com'],
+        #     fail_silently=False
+        # )
 
-        messages.success(request,"Your request has been posted thank you for your response")
+        messages.success(request,"Your requests has been posted thank you for your response")
         return redirect('/listings/'+listing_id)
